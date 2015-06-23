@@ -12,4 +12,4 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('author', 'message', 'date')
-        permission_classes = (IsOwnerOrReadOnly,)
+        permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)

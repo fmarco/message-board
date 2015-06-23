@@ -12,4 +12,7 @@ from rest_framework.response import Response
 class MessageViewSet(viewsets.ModelViewSet):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
