@@ -4,8 +4,6 @@ from .models import Message
 
 
 class MessageAdmin(admin.ModelAdmin):
-    fields = ['author', 'message']
-    readonly_field = ('date',)
-    list_display = ('author', 'date')
+    list_display = ('author', 'date',)
 
 admin.site.register(Message, MessageAdmin)

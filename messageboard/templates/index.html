@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+<html>
+<head>
+<title>Message Board</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+</head>
+<body>
+    <div class="content">
+
+    </div>
+</body>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        function refresh_data(){
+            $('body').empty();
+            $.getJSON( "messages", function( data ) {
+                var items = [];
+                $.each( data, function( key, val ) {
+                    message_box = "<div class='message-box' id='" + key + "'>";
+                    message_box += "<div class='author'>Author: " + val.author + "</div>";
+                    message_box += "<div class='date'>Date: " + val.date + "</div>";
+                    message_box += "<div class='message'>Message: " + val.message + "</div>";
+                    message_box += "<div class='photo'>" + val.photo + "</div>";
+                    message_box += "</div>";
+                    items.push( message_box );
+                });
+
+                $( "<ul/>", {
+                "class": "message-list",
+                html: items.join( "" )
+                }).appendTo( "body" );
+            });
+        }
+        setInterval(function() {
+          refresh_data();
+        }, 2000);
+    });
+</script>
+</html>
