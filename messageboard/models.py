@@ -15,7 +15,7 @@ class Message(models.Model):
     author = models.ForeignKey(User)
     message = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to="%Y/%m/%d", blank=True, null=True)
+    image = models.ImageField(upload_to="img/", blank=True, null=True)
 
     class Meta:
         ordering = ('-date',)

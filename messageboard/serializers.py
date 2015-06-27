@@ -8,9 +8,8 @@ class MessageSerializer(serializers.ModelSerializer):
     author = serializers.CharField(read_only=True)
     message = serializers.CharField(read_only=True)
     date = serializers.DateTimeField(read_only=True)
-    photo = serializers.ImageField(read_only=True)
+    image = serializers.ImageField(read_only=True)
 
     class Meta:
         model = Message
-        fields = ('author', 'message', 'date', 'photo')
-        permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)
+        fields = ('author', 'message', 'date', 'image')

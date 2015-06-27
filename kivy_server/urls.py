@@ -16,9 +16,18 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.models import User
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls import patterns
 
 urlpatterns = [
     url(r'^', include('messageboard.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
+
+# This is only needed when using runserver.
+if settings.DEBUG:
+    urlpatterns = patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve',  # NOQA
+            {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+        ) + staticfiles_urlpatterns() + urlpatterns  # NOQA

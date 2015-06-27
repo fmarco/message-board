@@ -9,7 +9,9 @@ from rest_framework.decorators import list_route
 from rest_framework.response import Response
 
 from django.core.files import File
-from django.core.files.base import ContentFile
+
+import base64
+
 
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer
@@ -23,17 +25,14 @@ class MessageViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def perform_create(self, serializer):
-        from django.core.files.uploadedfile import SimpleUploadedFile
-
         photo_file = None
-        if 'file_content' in self.request.FILES:
-            photo = self.request.data['file_content'].file
-            print photo
-            print type(photo)
-            photo_file = SimpleUploadedFile('ciai',photo)
-            print photo_file
+        if 'photo' in self.request.data:
+            photo = base64.b64decode(self.request.data['photo'])
+            with open('media/img/snapshot.jpg', 'wb') as f:
+                f.write(photo)
+                photo_file = File(f, name='snapshot.jpg')
         serializer.save(
             author=self.request.user,
             message=self.request.data['message'],
-            #photo=photo_file
+            image=photo_file
         )
