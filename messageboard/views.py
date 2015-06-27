@@ -9,6 +9,7 @@ from rest_framework.decorators import list_route
 from rest_framework.response import Response
 
 from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 import base64
 
@@ -28,9 +29,10 @@ class MessageViewSet(viewsets.ModelViewSet):
         photo_file = None
         if 'photo' in self.request.data:
             photo = base64.b64decode(self.request.data['photo'])
-            with open('media/img/snapshot.jpg', 'wb') as f:
-                f.write(photo)
-                photo_file = File(f, name='snapshot.jpg')
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(photo)
+            img_temp.flush()
+            photo_file = File(img_temp)
         serializer.save(
             author=self.request.user,
             message=self.request.data['message'],
