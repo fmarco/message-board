@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'messageboard',
     'rest_framework',
     'rest_framework.authtoken',
+    'easy_thumbnails',
 )
 
 MIDDLEWARE_CLASSES = (
