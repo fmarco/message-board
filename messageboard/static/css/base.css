@@ -8,4 +8,5 @@ body {
     margin: 15px;
     width: 500px;
     font-size: 20px;
+    border: 1px SOLID green;
 }
