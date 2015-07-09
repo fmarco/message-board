@@ -5,39 +5,22 @@
 <title>Message Board</title>
 <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" />
 <script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+<script src="{% static 'js/angular.min.js' %}"></script>
+<script src="{% static 'js/app.js' %}"></script>
+
 </head>
 <body>
-    <div class="content">
-
+    {% verbatim %}
+    <div class="content" ng-app="messageboard" ng-controller="messageCtrl">
+        <ul class="message-list">
+        <div class='message-box' ng-repeat="msg in messages">
+        <div class='author'>Author: {{msg.author}}</div>
+        <div class='date'>Date: {{msg.date}}</div>
+        <div class='message'>Message: {{msg.message}}</div>
+        <div class='photo' ng-if=msg.image><img src='{{msg.image}}' style='width:500px;height:500px;'/></div>
+        </div>
+        </ul>
     </div>
+    {% endverbatim %}
 </body>
-<script type="text/javascript">
-    $( document ).ready(function() {
-        function refresh_data(){
-            $('body').empty();
-            $.getJSON( "messages/all", function( data ) {
-                var items = [];
-                $.each( data, function( key, val ) {
-                    message_box = "<div class='message-box' id='" + key + "'>";
-                    message_box += "<div class='author'>Author: " + val.author + "</div>";
-                    message_box += "<div class='date'>Date: " + val.date + "</div>";
-                    message_box += "<div class='message'>Message: " + val.message + "</div>";
-                    if(val.image){
-                        message_box += "<div class='photo'><img src='" + val.image + "' style='width:500px;height:500px;'/></div>";
-                    }
-                    message_box += "</div>";
-                    items.push( message_box );
-                });
-
-                $( "<ul/>", {
-                "class": "message-list",
-                html: items.join( "" )
-                }).appendTo( "body" );
-            });
-        }
-        setInterval(function() {
-          refresh_data();
-        }, 3000);
-    });
-</script>
 </html>

@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    pk = serializers.IntegerField(read_only=True)
     author = serializers.CharField(read_only=True)
     message = serializers.CharField(read_only=True)
     date = serializers.DateTimeField(read_only=True)
@@ -12,4 +13,4 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ('author', 'message', 'date', 'image')
+        fields = ('pk', 'author', 'message', 'date', 'image')
