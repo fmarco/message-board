@@ -11,18 +11,31 @@
 </head>
 <body>
     {% verbatim %}
-    <div class="content" ng-app="messageboard" ng-controller="messageCtrl">
-        <ul class="message-list">
-            <div class='message-box' ng-repeat="msg in messages">
-            <div>
-                <div class='author'>Author: {{msg.author}}</div>
-                <div class='delete-btn' ng-click="delete(msg.pk)">x </div>
+    <div class="container"  ng-app="messageboard" ng-controller="messageCtrl">
+        <div class="content">
+            <ul class="message-list">
+                <div class='message-box' ng-repeat="msg in messages">
+                <div>
+                    <div class='author'>Author: {{msg.author}}</div>
+                    <div class='delete-btn' ng-click="delete(msg.pk)">x </div>
+                </div>
+                <div class='date'>Date: {{msg.date}}</div>
+                <div class='message'>Message: {{msg.message}}</div>
+                <div class='photo' ng-if=msg.image><img src='{{msg.image}}' style='width:500px;height:500px;'/></div>
+                </div>
+            </ul>
+        </div>
+        <div class="editor">
+            <div class="text">
+                Message: <input type="text" ng-model="message" />
             </div>
-            <div class='date'>Date: {{msg.date}}</div>
-            <div class='message'>Message: {{msg.message}}</div>
-            <div class='photo' ng-if=msg.image><img src='{{msg.image}}' style='width:500px;height:500px;'/></div>
+            <div class="image">
+                Image: <input type="file" name="pic" accept="image/*" ng-model="imgFile">
             </div>
-        </ul>
+            <div class="send-btn">
+                <span ng-click="save()">Send</span>
+            </div>
+        </div>
     </div>
     {% endverbatim %}
 </body>
