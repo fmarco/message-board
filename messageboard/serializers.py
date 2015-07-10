@@ -4,7 +4,7 @@ from .permissions import IsOwnerOrReadOnly
 from rest_framework.permissions import IsAuthenticated
 
 
-class MessageSerializer(serializers.ModelSerializer):
+class MessageReadSerializer(serializers.ModelSerializer):
     pk = serializers.IntegerField(read_only=True)
     author = serializers.CharField(read_only=True)
     message = serializers.CharField(read_only=True)
@@ -14,3 +14,12 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('pk', 'author', 'message', 'date', 'image')
+
+
+class MessageWriteSerializer(serializers.ModelSerializer):
+    message = serializers.CharField()
+    image = serializers.ImageField(required=False, allow_null=True)
+
+    class Meta:
+        model = Message
+        fields = ('message', 'image')

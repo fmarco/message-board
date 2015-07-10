@@ -10,3 +10,12 @@ body {
     font-size: 20px;
     border: 1px SOLID green;
 }
+
+.delete-btn, .author{
+    display: inline-block;
+}
+
+.delete-btn {
+    float: right;
+    margin-right: 5px;
+}

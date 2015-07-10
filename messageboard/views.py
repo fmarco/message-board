@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Message
-from .serializers import MessageSerializer
+from .serializers import MessageWriteSerializer, MessageReadSerializer
 from .permissions import IsOwnerOrReadOnly
 from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticated
@@ -15,14 +15,14 @@ import base64
 
 
 class MessageViewSet(viewsets.ModelViewSet):
-    serializer_class = MessageSerializer
+    serializer_class = MessageReadSerializer
     permission_classes = (permissions.IsAuthenticated,)
     queryset = Message.objects.all()
 
     @list_route(methods=['get'], permission_classes=[permissions.AllowAny])
     def all(self, request):
         messages = Message.objects.all()
-        serializer = MessageSerializer(messages, many=True)
+        serializer = MessageReadSerializer(messages, many=True)
         return Response(serializer.data)
 
     def perform_create(self, serializer):
@@ -38,3 +38,9 @@ class MessageViewSet(viewsets.ModelViewSet):
             message=self.request.data['message'],
             image=photo_file
         )
+
+    def get_serializer_class(self):
+        if  self.request.method == 'POST':
+            return MessageWriteSerializer
+        else:
+            return super(MessageViewSet, self).get_serializer_class()
