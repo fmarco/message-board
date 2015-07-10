@@ -8,7 +8,7 @@ app.config(['$httpProvider', function($httpProvider) {
 
 app.controller('messageCtrl', function($scope, $http, $interval) {
 
-
+    //TODO: encode the file to base64 and add it the POST request
     var urlBase = '/messages';
 
     var refresh_data = function(){
