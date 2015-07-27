@@ -20,8 +20,8 @@ angular.module('messageboard.services', [])
             return $http.delete(urlBase + '/' + id);
         }
 
-        this.save = function(){
-            $http.post(urlBase + "/", {message:$scope.message}).
+        this.save = function(msg){
+            $http.post(urlBase + "/", {message:msg}).
                 success(function(data, status, headers, config) {
                     console.log("Message sent!");
                   }).

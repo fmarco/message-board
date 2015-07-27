@@ -5,7 +5,9 @@ angular.module('messageboard.controllers', ['messageboard.services', 'messageboa
     //TODO: encode the file to base64 and add it the POST request
 
     $scope.delete = msgclient.delete;
-    $scope.save = msgclient.save;
+    $scope.save = function(){
+        msgclient.save($scope.message);
+    }
 
     var get_data = function(){
             msgclient.refresh_data().success(function(data){
